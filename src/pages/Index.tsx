@@ -307,7 +307,14 @@ const Index = () => {
                 </div>
                 <div className="flex items-center">
                   <Github className="mr-3 h-5 w-5 text-blue-600" />
-                  <span>GitHub Profile</span>
+                  <a 
+                    href="https://github.com/sakkireddigarimahesh" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="text-blue-600 hover:underline"
+                  >
+                    GitHub Profile
+                  </a>
                 </div>
                 <div className="flex items-center">
                   <Linkedin className="mr-3 h-5 w-5 text-blue-600" />
