@@ -4,8 +4,17 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge";
 import { Mail, Phone, Github, Linkedin, Download, Eye, MessageCircle, Code, Database, Globe, Cpu, Award, GraduationCap, FileText, ExternalLink } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
+import { useState } from "react";
+import { useToast } from "@/hooks/use-toast";
 
 const Index = () => {
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    message: ''
+  });
+  const { toast } = useToast();
+
   const skills = {
     "Programming Languages": ["Python", "Java (Basics)"],
     "Web Technologies": ["HTML", "CSS", "JavaScript"],
@@ -20,21 +29,24 @@ const Index = () => {
       description: "Arduino + Sensors based IoT solution that reduced power consumption through intelligent lighting control",
       technologies: ["Arduino", "IoT", "Sensors"],
       type: "IoT Project",
-      highlight: "Energy-efficient model"
+      highlight: "Energy-efficient model",
+      link: null
     },
     {
       title: "Weather App",
       description: "Real-time weather display application using OpenWeatherMap API with responsive design",
       technologies: ["HTML", "CSS", "JavaScript", "API"],
       type: "Web Application",
-      highlight: "Real-time data"
+      highlight: "Real-time data",
+      link: "https://github.com/sakkireddigarimahesh/weather_app"
     },
     {
       title: "CRM Web App",
       description: "Full-stack customer relationship management system with user authentication and CRUD operations",
       technologies: ["Django", "MySQL", "Python"],
       type: "Full Stack",
-      highlight: "Complete CRUD functionality"
+      highlight: "Complete CRUD functionality",
+      link: "https://github.com/sakkireddigarimahesh/django_crm"
     }
   ];
 
@@ -60,14 +72,59 @@ const Index = () => {
   ];
 
   const certifications = [
-    "Python Essentials 1 & 2 – Cisco",
-    "Python for Data Science – IBM",
-    "Cloud Computing – NPTEL",
-    "Full Stack Web Development Internship – 2024"
+    {
+      title: "Python Essentials 1 & 2 – Cisco",
+      link: "https://drive.google.com/file/d/1_yxo3WEcz6ci1Mz9qLnUKoJTsGLr__ZP/view?usp=drivesdk"
+    },
+    {
+      title: "Python for Data Science – IBM",
+      link: "https://www.credly.com/badges/273f046e-eaf5-4729-9c8a-7cdae608dd36/linked_in_profile"
+    },
+    {
+      title: "Cloud Computing – NPTEL",
+      link: "https://drive.google.com/file/d/1_yxo3WEcz6ci1Mz9qLnUKoJTsGLr__ZP/view?usp=drivesdk"
+    },
+    {
+      title: "Full Stack Web Development Internship – 2024",
+      link: "https://drive.google.com/file/d/1_m0q6dfqj-ZkE7xzagg1Ewj8RhV31noj/view?usp=drivesdk"
+    }
   ];
 
   const scrollToSection = (sectionId: string) => {
     document.getElementById(sectionId)?.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  const handleDownloadResume = () => {
+    window.open("https://drive.google.com/file/d/1ciw8TNYaFhX8X1gkC-7mAflQuPn-UwLR/view?usp=drivesdk", "_blank");
+  };
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    // Create mailto link
+    const subject = encodeURIComponent(`Message from ${formData.name}`);
+    const body = encodeURIComponent(`Name: ${formData.name}\nEmail: ${formData.email}\n\nMessage:\n${formData.message}`);
+    const mailtoLink = `mailto:s.maheshmahi1234@gmail.com?subject=${subject}&body=${body}`;
+    
+    // Open email client
+    window.location.href = mailtoLink;
+    
+    // Show success message
+    toast({
+      title: "Email client opened",
+      description: "Your email client should open with the message pre-filled.",
+    });
+    
+    // Reset form
+    setFormData({ name: '', email: '', message: '' });
   };
 
   return (
@@ -83,13 +140,12 @@ const Index = () => {
               Full Stack Developer | IoT Innovator | Python & Django Enthusiast
             </p>
             <p className="text-lg text-gray-600 max-w-3xl mx-auto leading-relaxed">
-              I'm a tech enthusiast passionate about building real-world solutions using Python, Django, and IoT systems. 
-              With a strong foundation in ECE, I blend hardware logic with software innovation.
+              I'm Mahesh, a passionate tech enthusiast with a background in Electronics and Communication Engineering. I love building web applications and exploring smart technology solutions using Python, Django, and IoT. I'm always eager to learn and grow as a developer.
             </p>
           </div>
           
           <div className="flex flex-wrap justify-center gap-4">
-            <Button size="lg" className="bg-blue-600 hover:bg-blue-700">
+            <Button size="lg" className="bg-blue-600 hover:bg-blue-700" onClick={handleDownloadResume}>
               <Download className="mr-2 h-5 w-5" />
               Download Resume
             </Button>
@@ -228,10 +284,22 @@ const Index = () => {
                       <Award className="mr-1 h-4 w-4" />
                       {project.highlight}
                     </div>
-                    <Button variant="outline" size="sm" className="w-full">
-                      <ExternalLink className="mr-2 h-4 w-4" />
-                      View Project
-                    </Button>
+                    {project.link ? (
+                      <Button 
+                        variant="outline" 
+                        size="sm" 
+                        className="w-full"
+                        onClick={() => window.open(project.link, "_blank")}
+                      >
+                        <ExternalLink className="mr-2 h-4 w-4" />
+                        View Project
+                      </Button>
+                    ) : (
+                      <Button variant="outline" size="sm" className="w-full" disabled>
+                        <ExternalLink className="mr-2 h-4 w-4" />
+                        Coming Soon
+                      </Button>
+                    )}
                   </div>
                 </CardContent>
               </Card>
@@ -276,9 +344,18 @@ const Index = () => {
             {certifications.map((cert, index) => (
               <Card key={index} className="shadow-lg">
                 <CardContent className="p-4">
-                  <div className="flex items-center">
-                    <Award className="mr-3 h-5 w-5 text-blue-600" />
-                    <p className="text-gray-700">{cert}</p>
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center">
+                      <Award className="mr-3 h-5 w-5 text-blue-600" />
+                      <p className="text-gray-700">{cert.title}</p>
+                    </div>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => window.open(cert.link, "_blank")}
+                    >
+                      <ExternalLink className="h-4 w-4" />
+                    </Button>
                   </div>
                 </CardContent>
               </Card>
@@ -335,23 +412,35 @@ const Index = () => {
                 <CardTitle className="text-blue-600">Send a Message</CardTitle>
               </CardHeader>
               <CardContent>
-                <form className="space-y-4">
+                <form className="space-y-4" onSubmit={handleSubmit}>
                   <input
                     type="text"
+                    name="name"
                     placeholder="Your Name"
+                    value={formData.name}
+                    onChange={handleInputChange}
+                    required
                     className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                   />
                   <input
                     type="email"
+                    name="email"
                     placeholder="Your Email"
+                    value={formData.email}
+                    onChange={handleInputChange}
+                    required
                     className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                   />
                   <textarea
+                    name="message"
                     placeholder="Your Message"
                     rows={4}
+                    value={formData.message}
+                    onChange={handleInputChange}
+                    required
                     className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                   ></textarea>
-                  <Button className="w-full bg-blue-600 hover:bg-blue-700">
+                  <Button type="submit" className="w-full bg-blue-600 hover:bg-blue-700">
                     Send Message
                   </Button>
                 </form>
