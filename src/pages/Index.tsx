@@ -1,7 +1,7 @@
-
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Mail, Phone, Github, Linkedin, Download, Eye, MessageCircle, Code, Database, Globe, Cpu, Award, GraduationCap, FileText, ExternalLink } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 import { useState } from "react";
@@ -133,6 +133,17 @@ const Index = () => {
       <section className="relative py-20 px-4 text-center bg-white">
         <div className="max-w-4xl mx-auto">
           <div className="mb-8">
+            {/* Profile Picture */}
+            <div className="mb-6 flex justify-center">
+              <Avatar className="w-32 h-32 border-4 border-blue-600">
+                <AvatarImage 
+                  src="/lovable-uploads/cdb74466-9826-426a-807d-4b05e0b7f795.png" 
+                  alt="Sakki Reddigari Mahesh"
+                />
+                <AvatarFallback className="text-2xl bg-blue-100 text-blue-600">SM</AvatarFallback>
+              </Avatar>
+            </div>
+            
             <h1 className="text-5xl font-bold text-gray-900 mb-4">
               Sakki Reddigari Mahesh
             </h1>
