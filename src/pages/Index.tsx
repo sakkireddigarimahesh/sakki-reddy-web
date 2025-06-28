@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
-import { Mail, Phone, Github, Linkedin, Download, Eye, MessageCircle, Code, Database, Globe, Cpu, Award, GraduationCap, FileText, ExternalLink } from "lucide-react";
+import { Mail, Phone, Github, Linkedin, Download, Eye, MessageCircle, Code, Database, Globe, Cpu, Award, GraduationCap, FileText, ExternalLink, Briefcase } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
@@ -47,6 +47,14 @@ const Index = () => {
       type: "Full Stack",
       highlight: "Complete CRUD functionality",
       link: "https://github.com/sakkireddigarimahesh/django_crm"
+    },
+    {
+      title: "Product Display Page (E-Commerce UI)",
+      description: "Designed and developed a responsive product detail page using HTML, CSS, and JavaScript. Features modern UI with dynamic image gallery, product details, ratings, pricing, and interactive elements like 'Add to Cart' and social sharing options.",
+      technologies: ["HTML", "CSS", "JavaScript"],
+      type: "Frontend",
+      highlight: "Modern UI with clean design",
+      link: "https://sakkireddigarimahesh.github.io/Product-Landing-Page/"
     }
   ];
 
@@ -71,6 +79,24 @@ const Index = () => {
     }
   ];
 
+  const internships = [
+    {
+      title: "Full Stack Web Development Internship",
+      company: "SLASH MARK IT SOLUTIONS PVT LTD",
+      location: "Remote",
+      duration: "November 2024 – April 2025 (6 months)",
+      responsibilities: [
+        "Built responsive web applications using HTML, CSS, JavaScript, and React.js for the frontend",
+        "Developed backend services with Python (Django) / Node.js, and integrated RESTful APIs",
+        "Managed MySQL/MongoDB databases for CRUD operations and optimized data performance",
+        "Used Git and GitHub for version control and collaborated in Agile workflows",
+        "Deployed projects on Heroku, Vercel, or Netlify with environment configuration",
+        "Debugged issues, improved performance, and ensured mobile-first, cross-browser design"
+      ],
+      certificateLink: "https://drive.google.com/file/d/1_m0q6dfqj-ZkE7xzagg1Ewj8RhV31noj/view?usp=drivesdk"
+    }
+  ];
+
   const certifications = [
     {
       title: "Python Essentials 1 & 2 – Cisco",
@@ -85,8 +111,16 @@ const Index = () => {
       link: "https://drive.google.com/file/d/1_yxo3WEcz6ci1Mz9qLnUKoJTsGLr__ZP/view?usp=drivesdk"
     },
     {
-      title: "Full Stack Web Development Internship – 2024",
-      link: "https://drive.google.com/file/d/1_m0q6dfqj-ZkE7xzagg1Ewj8RhV31noj/view?usp=drivesdk"
+      title: "CCNA: Enterprise Networking, Security, and Automation by Cisco",
+      link: "https://www.credly.com/badges/c14580d4-c92d-4d96-bc35-fcdd7e23d4b5/linked_in_profile"
+    },
+    {
+      title: "CCNA: Switching, Routing, and Wireless Essentials by Cisco",
+      link: "https://www.credly.com/badges/56201830-c904-43ae-b9ca-d1177281d985/linked_in_profile"
+    },
+    {
+      title: "CCNA: Introduction to Networks by Cisco",
+      link: "https://www.credly.com/badges/4c725a23-4cc4-4a51-8145-9227b0460f28/linked_in_profile"
     }
   ];
 
@@ -137,7 +171,7 @@ const Index = () => {
             <div className="mb-6 flex justify-center">
               <Avatar className="w-32 h-32 border-4 border-blue-600">
                 <AvatarImage 
-                  src="/lovable-uploads/cdb74466-9826-426a-807d-4b05e0b7f795.png" 
+                  src="/lovable-uploads/4ebfabda-c889-422b-879f-166bef8b9b62.png" 
                   alt="Sakki Reddigari Mahesh"
                 />
                 <AvatarFallback className="text-2xl bg-blue-100 text-blue-600">SM</AvatarFallback>
@@ -311,6 +345,57 @@ const Index = () => {
                         Coming Soon
                       </Button>
                     )}
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Internship Section */}
+      <section className="py-16 px-4 bg-white">
+        <div className="max-w-6xl mx-auto">
+          <h2 className="text-3xl font-bold text-center text-gray-900 mb-12">Professional Experience</h2>
+          <div className="space-y-6">
+            {internships.map((internship, index) => (
+              <Card key={index} className="shadow-lg">
+                <CardHeader>
+                  <div className="flex flex-col md:flex-row md:justify-between md:items-start">
+                    <div className="flex items-center mb-2 md:mb-0">
+                      <Briefcase className="mr-3 h-6 w-6 text-blue-600" />
+                      <div>
+                        <CardTitle className="text-xl text-gray-900">{internship.title}</CardTitle>
+                        <p className="text-lg font-semibold text-blue-600">{internship.company}</p>
+                        <p className="text-gray-600">{internship.location}</p>
+                      </div>
+                    </div>
+                    <div className="text-right">
+                      <Badge variant="secondary" className="mb-2">{internship.duration}</Badge>
+                      <div>
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={() => window.open(internship.certificateLink, "_blank")}
+                        >
+                          <ExternalLink className="mr-2 h-4 w-4" />
+                          Certificate
+                        </Button>
+                      </div>
+                    </div>
+                  </div>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-2">
+                    <h4 className="font-semibold text-gray-900 mb-3">Key Responsibilities & Achievements:</h4>
+                    <ul className="space-y-2">
+                      {internship.responsibilities.map((responsibility, idx) => (
+                        <li key={idx} className="flex items-start">
+                          <span className="text-blue-600 mr-2">•</span>
+                          <span className="text-gray-600">{responsibility}</span>
+                        </li>
+                      ))}
+                    </ul>
                   </div>
                 </CardContent>
               </Card>
